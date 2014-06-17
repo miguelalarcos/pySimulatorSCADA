@@ -1,6 +1,9 @@
 from simple_json import dumps
-from twisted.web import server, resource
+from twisted.web import resource
 from twisted.internet import reactor, task
+
+from twisted.application import service
+from twisted.web import server
 
 balbula_1 = True
 input1 = 100
@@ -39,5 +42,9 @@ t.start(1.0)
 root = resource.Resource()
 root.putChild('data', DataResource())
 root.putChild('set_balbula_1', SetBalbula_1())
-reactor.listenTCP(8080, server.Site(root))
-reactor.run()
+
+application = service.Application('SCADA')
+service = reactor.listenTCP(8080, server.Site(root))
+print dir(application)
+application.addComponent(service)
+#reactor.run()
