@@ -34,7 +34,6 @@ def f():
     global input1
     input1 -= 1
     input1 += balbula_1*2
-    print input1
 
 t = task.LoopingCall(f)
 t.start(1.0)
@@ -45,6 +44,6 @@ root.putChild('set_balbula_1', SetBalbula_1())
 
 application = service.Application('SCADA')
 service = reactor.listenTCP(8080, server.Site(root))
-print dir(application)
 application.addComponent(service)
-#reactor.run()
+if __name__ == '__main__':
+    reactor.run()
