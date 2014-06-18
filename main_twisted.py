@@ -5,8 +5,10 @@ from twisted.internet import reactor, task
 from twisted.application import service
 from twisted.web import server
 
+from temperature import read_temp
+
 balbula_1 = True
-input1 = 100
+input1 = 0.0
 
 
 class DataResource(resource.Resource):
@@ -32,8 +34,9 @@ class SetBalbula_1(resource.Resource):
 
 def f():
     global input1
-    input1 -= 1
-    input1 += balbula_1*2
+    #input1 -= 1
+    #input1 += balbula_1*2
+    input1 = read_temp() or input1
 
 t = task.LoopingCall(f)
 t.start(1.0)
