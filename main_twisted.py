@@ -10,7 +10,7 @@ from time import time
 
 sets = {}
 sets['balbula_1'] = True
-input1 = 0.0
+input1 = 40.0
 
 
 class DataResource(resource.Resource):
@@ -30,14 +30,24 @@ class Set(resource.Resource):
         return ''
 
 
-def f():
+def simulacion():
     global input1
     input1 -= 1
     input1 += sets['balbula_1']*2
     #input1 = read_temp() or input1
 
-t = task.LoopingCall(f)
-t.start(1.0)
+t = task.LoopingCall(simulacion)
+t.start(0.5)
+
+def f2():
+    global input1
+    if input1 < 50:
+        sets['balbula_1'] = True
+    else:
+        sets['balbula_1'] = False
+
+t2 = task.LoopingCall(f2)
+t2.start(1.0)
 
 root = resource.Resource()
 root.putChild('data', DataResource())
