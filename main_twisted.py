@@ -7,10 +7,11 @@ from twisted.web import server
 
 #from temperature import read_temp
 from time import time
+from random import random
 
 sets = {}
 sets['balbula_1'] = True
-input1 = 40.0
+input1 = 50.0
 
 
 class DataResource(resource.Resource):
@@ -33,7 +34,9 @@ class Set(resource.Resource):
 def simulacion():
     global input1
     input1 -= 1
-    input1 += sets['balbula_1']*2
+    #q = 1.025
+    q = (50 - input1)/1.8
+    input1 += sets['balbula_1']*q + q*random()
     #input1 = read_temp() or input1
 
 t = task.LoopingCall(simulacion)
