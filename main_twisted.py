@@ -11,6 +11,7 @@ from random import random
 
 sets = {}
 sets['balbula_1'] = True
+sets['control'] = False
 input1 = 50.0
 
 
@@ -19,7 +20,7 @@ class DataResource(resource.Resource):
 
     def render_GET(self, request):
         request.setHeader("content-type", "application/json")
-        return dumps({'time': time(), 'balbula_1': sets['balbula_1'], 'input1': input1})
+        return dumps({'time': time(), 'control': sets['control'], 'balbula_1': sets['balbula_1'], 'input1': input1})
 
 
 class Set(resource.Resource):
@@ -34,20 +35,21 @@ class Set(resource.Resource):
 def simulacion():
     global input1
     input1 -= 1
-    #q = 1.025
-    q = (50 - input1)/1.8
-    input1 += sets['balbula_1']*q + q*random()
+
+    input1 += sets['balbula_1']*2 
     #input1 = read_temp() or input1
+    print input1
 
 t = task.LoopingCall(simulacion)
 t.start(0.5)
 
 def f2():
     global input1
-    if input1 < 50:
-        sets['balbula_1'] = True
-    else:
-        sets['balbula_1'] = False
+    if not sets['control']:
+        if input1 <= 50:
+            sets['balbula_1'] = True
+        else:
+            sets['balbula_1'] = False
 
 t2 = task.LoopingCall(f2)
 t2.start(1.0)
