@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/pySimulatorSCADA.iml" filepath="$PROJECT_DIR$/.idea/pySimulatorSCADA.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../pytest/.idea/pytest.iml" filepath="$PROJECT_DIR$/../pytest/.idea/pytest.iml" />
     </modules>
   </component>
 </project>

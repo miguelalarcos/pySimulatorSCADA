@@ -23,12 +23,15 @@ class DataResource(resource.Resource):
         return dumps({'time': time(), 'control': sets['control'], 'balbula_1': sets['balbula_1'], 'input1': input1})
 
 
+def setUnset(variable):
+    sets[variable] = not sets[variable]
+
 class Set(resource.Resource):
     isLeaf = True
 
     def render_POST(self, request):
         variable = request.args['var'][0]
-        sets[variable] = not sets[variable]
+        setUnset(variable)
         return ''
 
 
@@ -41,7 +44,7 @@ def simulacion():
     print input1
 
 t = task.LoopingCall(simulacion)
-t.start(0.5)
+
 
 def f2():
     global input1
@@ -52,7 +55,7 @@ def f2():
             sets['balbula_1'] = False
 
 t2 = task.LoopingCall(f2)
-t2.start(1.0)
+
 
 root = resource.Resource()
 root.putChild('data', DataResource())
@@ -61,5 +64,8 @@ root.putChild('set', Set())
 application = service.Application('SCADA')
 service = reactor.listenTCP(8080, server.Site(root))
 application.addComponent(service)
+
 if __name__ == '__main__':
+    t.start(0.5)
+    t2.start(1.0)
     reactor.run()

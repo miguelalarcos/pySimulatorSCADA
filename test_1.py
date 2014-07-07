@@ -1,5 +1,6 @@
-def test_1():
-  assert 1 == 1
+from main_twisted import *
 
-def test2_():
-  assert 2 == 3
+def test_setUnset_Control():
+    sets['control'] = False
+    setUnset('control')
+    assert sets['control'] == True
