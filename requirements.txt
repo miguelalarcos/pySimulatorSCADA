@@ -4,3 +4,4 @@ simple-json==1.1
 simplejson==3.5.3
 wsgiref==0.1.2
 zope.interface==4.1.1
+mock==1.0.1
